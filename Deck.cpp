@@ -50,11 +50,25 @@ Card Deck::DealCard(){
 	return tmp;	
 }
 
+// Returns card on the bottom of the deck
+// This is the card face up on the discard pile.
+Card Deck::BottomCard(){
+	Card tmp = pile.top();
+	pile.pop();
+	return tmp;
+}
+
 
 // Places the card back at the bottom of the deck.
 // Note: the bottom of the deck is represented by the front of the vector.
 void Deck::GetCard(Card tmp){
 	deck.insert(deck.begin(), tmp);
+	return;
+}
+
+//Places card on the top of the discard pile.
+void Deck::DiscardCard(Card card){
+	pile.push(card);
 	return;
 }
 
