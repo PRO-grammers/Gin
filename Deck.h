@@ -10,7 +10,6 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
-#include <stack>
 
 #include "Card.h"
 
@@ -26,17 +25,14 @@ public:
 
 	void Shuffle();
 	Card DealCard();
-	Card BottomCard();
-
-	void GetCard(Card card);	//Places card on bottom of deck
-	void DiscardCard(Card card); //Places card on top of discard pile.
+	void GetCard(Card card);
 
 	void Print();
 
 private:
 	void Swap(Card x, Card y);
 
-	vector<Card> deck;	//This is the deck
-	stack<Card> pile;	//This is the discard pile.
+	vector<Card> deck;
+
 };
 
