@@ -21,16 +21,16 @@ public:
 	friend void PrintHand(player p);
 	void SelectCard(char ans);
 	void DiscardCard(player p, Card card);
-	void FindSets(Card a[],Card b[], Card c[]);
+	void FindSets(Value a[],Value b[],Value c[]);
 	bool GotGin(player p);
-	void get_set1(Card set1[])
-	void get_set2(Card set2[])
-	void get_set3(Card set3[])
+	void get_set1(Value set1[])
+	void get_set2(Value set2[])
+	void get_set3(Value set3[])
 private:
 	vector<Card> hand;
-	Card set1[4];
-	Card set2[4];
-	Card set3[3];
+	Value set1[4];
+	Value set2[4];
+	Value set3[3];
 };
 
 #endif
