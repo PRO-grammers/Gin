@@ -1,19 +1,26 @@
 #include "player.h"
 #include "stdafx.h"
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <string>
+#include <cmath>
+
+using namespace std;
 
 ostream &operator<<(ostream& cout, player &p){
 	cout << Card::name;
 	return cout;
 }
 
-void PrintHand(player p){
+void player::PrintHand(player p){
 	for(int i = 0; i < HAND_SIZE; i++){
 		cout << p.hand.at(i) << " ";	//Need to fix this, make it a cout << card
 	}
 
 }
 
-void PlayerTurn(hand h)
+void player::PlayerTurn(hand h)
 {
 	if(GotGin() != true)
 	{
@@ -34,7 +41,7 @@ void PlayerTurn(hand h)
 	}
 }
 
-void SelectCard(char ans)
+void player::SelectCard(char ans)
 {
 	if(ans =='P')
 	{
@@ -46,7 +53,7 @@ void SelectCard(char ans)
 	}
 }
 
-void DiscardCard(){
+void player::DiscardCard(){
 	char the_value;
 	string the_suit;
 	cout << "What is the value of the card you would like to discard?" << endl;
@@ -55,12 +62,12 @@ void DiscardCard(){
 	cin >> the_suit;
 }
 
-void FindSets()
+void player::FindSets(Card a[], Card b[], Card c[])
 {
-
+	
 }
 
-bool GotGin()
+bool player::GotGin()
 {
-
+	
 }
