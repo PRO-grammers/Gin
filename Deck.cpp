@@ -1,4 +1,4 @@
-/*
+/* 
   Author:  Logan MacKenzie
   Course:  Comp 220, Computer Programming II
   Date:    20 September 2014
