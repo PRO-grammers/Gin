@@ -62,12 +62,23 @@ void player::DiscardCard(){
 	cin >> the_suit;
 }
 
-void player::FindSets(Card a[], Card b[], Card c[])
+void player::FindSets(Value a[], Value b[], Value c[])
 {
 	
 }
 
 bool player::GotGin()
 {
-	
+	if((a[1]==a[2])&&(a[2]==a[3])&&(a[3]==a[4]))
+	{
+		if((b[1]==b[2])&&(b[2]==b[3])&&(b[3]==b[4]))
+		{
+			if((c[1]==c[2])&&(c[2]==c[3]))
+			{
+				cout << "Congradulations! You have Gin!" << endl;
+				cout << "GAME OVER" << endl;
+				exit(1);
+			}
+		}
+	}
 }
