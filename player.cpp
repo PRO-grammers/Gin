@@ -2,7 +2,7 @@
 Authors: Nick Fryer, Zachary Kuligin, Guilherme Pereira, Logan MacKenzie
 Class: Computer Programming II
 Date: September 24, 2014
-Description: This is the driver for the Player class.
+Description: This is code will allow the player to go through their turn
 */
 
 #include "player.h"
@@ -64,7 +64,7 @@ void player::SelectCard(char ans)
 	}
 }
 
-//this function will deicard the player's chosen card
+//this function will discard the player's chosen card
 void player::DiscardCard(){
 	Value the_value;
 	Suit the_suit;
