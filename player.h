@@ -1,3 +1,10 @@
+/*
+Authors: Nick Fryer, Zachary Kuligin, Guilherme Pereira, Logan MacKenzie
+Class: Computer Programming II
+Date: September 24, 2014
+Description: This is the header for the Player class.
+*/
+
 #ifndef ___PLAYER_H
 #define ___PLAYER_H
 
