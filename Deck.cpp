@@ -1,4 +1,4 @@
-/* 
+/*
   Author:  Logan MacKenzie
   Course:  Comp 220, Computer Programming II
   Date:    20 September 2014
@@ -31,7 +31,6 @@ Deck::~Deck(void)
 // To create a random order of cards.
 void Deck::Shuffle(){
 	int j, k;
-	Card ctmp;
 	for(unsigned int i = 0; i < deck.size(); i++){
 		j = rand() % deck.size();
 		k = rand() % deck.size();
@@ -58,6 +57,10 @@ Card Deck::BottomCard(){
 	return tmp;
 }
 
+Card Deck::PeekPile(){
+	return pile.top();
+}
+
 
 // Places the card back at the bottom of the deck.
 // Note: the bottom of the deck is represented by the front of the vector.
@@ -72,19 +75,38 @@ void Deck::DiscardCard(Card card){
 	return;
 }
 
+// CheckDeck checks to see if the deck is empty
+// If it is it calls ResetDeck to refill it.
+// If the deck is not empty, CheckDeck does nothing.
+void Deck::CheckDeck(){
+	if(deck.empty())
+		ResetDeck();
+	return;
+}
+
+// ResetDeck refills the deck with the cards from the discard pile
+// and Shuffles them.
+void Deck::ResetDeck(){
+	for(int i = pile.size(); i > 0; i--){
+		deck.push_back(pile.top());
+		pile.pop();
+	}
+	Shuffle();
+	return;
+}
+
 // Sequentially prints every card in the deck
 void Deck::Print(){
 	Card tmp;
 	for(unsigned int i = 0;  i < deck.size(); i++){
 		cout << deck[i].name() << endl;
 	}
-
 	return;
 }
 
 // Private function, Not needed outside class.
 // Swaps two cards
-void Deck::Swap(Card x, Card y){
+void Deck::Swap(Card& x, Card& y){
 	Card card = x;
 	x = y;
 	y = card;
