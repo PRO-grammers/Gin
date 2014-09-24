@@ -252,9 +252,6 @@ bool Player::DoesCardFit(Card card){
 		}
 	}
 
-
-
-
 	return true;
 }
 
