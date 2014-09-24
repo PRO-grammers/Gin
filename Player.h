@@ -31,7 +31,7 @@ public:
 
 	void DiscardCard(Card& card);
 
-	void Knock();
+	bool Knock();
 	bool CanKnock();
 
 	bool FindSets();
