@@ -12,5 +12,5 @@ public:
 	friend void RunGame();
 	int SumPoints();
 private:
-	Player players[2];
+	Player player1,player2;
 };
