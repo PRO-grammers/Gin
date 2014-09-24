@@ -3,4 +3,9 @@
  
  void Gin::RunGame()
  {
+ 	int turn;
+ 	while(Knock()==false)
+ 	{
+ 		
+ 	}
  }
