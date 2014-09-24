@@ -31,8 +31,7 @@ public:
 
 	void DiscardCard(Card& card);
 
-	bool Knock();
-	bool CanKnock();
+	bool WannaKnock();
 
 	bool FindSets();
 	void SortBySuit(vector<Card>& cards);
