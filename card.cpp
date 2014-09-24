@@ -1,10 +1,3 @@
-/*
-Authors: Nick Fryer, Zachary Kuligin, Guilherme Pereira, Logan MacKenzie
-Class: Computer Programming II
-Date: September 24, 2014
-Description: This is the driver for the Player class.
-*/
-
 #include "stdafx.h"
 #include "card.h"
 
