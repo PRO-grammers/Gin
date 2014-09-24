@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "card.h"
 
 string Card::suitName (Suit s) {
