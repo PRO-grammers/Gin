@@ -35,7 +35,7 @@ public:
 	bool CanKnock();
 
 	bool FindSets();
-	void SortBySuit(/*vector<Card>& cards*/);
+	void SortBySuit(vector<Card>& cards);
 	void SortByNumber(int start, int end);
 	void SortIntoSets();
 	bool DoesCardFit(Card card);
