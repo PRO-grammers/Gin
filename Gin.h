@@ -10,6 +10,7 @@ class Gin
 {
 public:
 	friend void RunGame();
+	int SumPoints();
 private:
 	Player players[2];
 };
