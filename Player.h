@@ -13,9 +13,10 @@ Description: This is the header file for the class Player which represents a pla
 #include "Card.h"
 #include "Deck.h"
 
-
+//set player hand size to 10 cards
 const int HAND_SIZE = 10;
 
+//this class deals with each player's turn
 class Player
 {
 public:
