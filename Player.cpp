@@ -100,9 +100,8 @@ void Player::DiscardCard(Card& card){
 	cin >> cardNumber;
 	if(0 <= cardNumber && cardNumber <= 10){
 		Swap(hand[cardNumber], card);
-	}else{
-		//Do nothing.
 	}
+	deck.DiscardCard(card);
 	return;
 }
 
