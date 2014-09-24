@@ -54,8 +54,8 @@ void player::SelectCard(char ans)
 }
 
 void player::DiscardCard(){
-	char the_value;
-	string the_suit;
+	Value the_value;
+	Suit the_suit;
 	cout << "What is the value of the card you would like to discard?" << endl;
 	cin.get(the_value);
 	cout << "What is the suit of the card you would like to discard?" << endl;
