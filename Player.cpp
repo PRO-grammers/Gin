@@ -257,6 +257,10 @@ bool Player::DoesCardFit(Card card){
 
 	return true;
 }
+
+bool Player::Knock(){
+	
+}
 /*
 Go through hand one card at a time:
 Does this card fit into any sets with the other cards
