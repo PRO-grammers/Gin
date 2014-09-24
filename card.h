@@ -2,14 +2,16 @@
 #define ___CARD_H
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 enum Suit {clubs, diamonds, hearts, spades};
-enum Value {two, three, four, five, six, seven, eight, nine, ten, jack, king, queen, ace};
+enum Value {ace, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king};
+
 
 class Card {
 public:
-	Card (Value faceValue=two, Suit suit = clubs):
+	Card (Value faceValue = two, Suit suit = clubs):
 		suit (suit), faceValue(faceValue) {}
 	Suit getSuit() { return suit; }
 	Value getValue() { return faceValue; }
