@@ -42,9 +42,6 @@ public:
 
 	bool FindRuns();
 
-	bool GotGin();
-
-
 private:
 	void Swap(Card& one, Card& two);
 
