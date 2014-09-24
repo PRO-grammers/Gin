@@ -9,7 +9,7 @@
 class Gin
 {
 public:
-	void RunGame();
+	friend void RunGame();
 private:
 	Player players[2];
 };
