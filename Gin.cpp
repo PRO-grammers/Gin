@@ -4,9 +4,10 @@
  void Gin::RunGame()
  {
  	player[0].PlayerTurn();
- 	while(Knock()==false)
+ 	while(WannaKnock()==false)
  	{
- 		
+ 	 player[1].PlayerTurn();
+ 	 player[0].PlayerTurn();
  	}
  }
  
