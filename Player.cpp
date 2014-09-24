@@ -105,7 +105,7 @@ void Player::DiscardCard(Card& card){
 	return;
 }
 
-bool Player::CanKnock(){
+bool Player::WannaKnock(){
 /*
 vector of matched cards, vector of unmatched cards.
 Find Runs: Sort by suit, sort by value. If series (3+) of values then RUN.
