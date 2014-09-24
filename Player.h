@@ -1,5 +1,5 @@
 /*
-Authors: Nick Fryer, Zach Kuligin, Guilherme, Pereira, Logan MacKenzie
+Authors: Nick Fryer, Zachary Kuligin, Guilherme, Pereira, Logan MacKenzie
 Class: Computer Programming II
 Date: September 24, 2014
 Description: This is the header file for the class Player which represents a player with
