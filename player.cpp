@@ -21,16 +21,17 @@ void player::PrintHand(player p){
 	}
 
 }
-
+//this function deals with each on of the player's turns
 void player::PlayerTurn(hand h)
 {
+	//as long as they do not have Gin, it will commence with player's turn
 	if(GotGin() != true)
 	{
 		cout << "Here are the cards currently in your hand:" << endl;
 		cout << PrintHand() << endl;
 		char ans;
 		cout << "Would you like to pick up the " <<  << " from the discard pile, or" << endl;
-		cout << "pick up from the deck? ('P' for the pile, 'D' for the deck)" << endl;
+		cout << " pick up from the deck? ('P' for the pile, 'D' for the deck)" << endl;
 		cin >> ans;
 		ans = toupper(ans);
 		while((ans != 'P')&&(ans != 'D'))
@@ -43,6 +44,7 @@ void player::PlayerTurn(hand h)
 	}
 }
 
+//this function will select a card from the player's hand depending on their input
 void player::SelectCard(char ans)
 {
 	if(ans =='P')
@@ -55,6 +57,7 @@ void player::SelectCard(char ans)
 	}
 }
 
+//this function will deicard the player's chosen card
 void player::DiscardCard(){
 	Value the_value;
 	Suit the_suit;
@@ -64,11 +67,13 @@ void player::DiscardCard(){
 	cin >> the_suit;
 }
 
+//this function will find any sets that the player has in their hand
 void player::FindSets(Value a[], Value b[], Value c[])
 {
 	
 }
 
+//this function will return true if the player has Gin
 bool player::GotGin()
 {
 	if((a[1]==a[2])&&(a[2]==a[3])&&(a[3]==a[4]))
