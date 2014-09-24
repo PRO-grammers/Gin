@@ -45,7 +45,7 @@ void player::SelectCard(char ans)
 {
 	if(ans =='P')
 	{
-
+		
 	}
 	if(ans == 'D')
 	{
