@@ -1,4 +1,6 @@
 #include "player.h"
+#include "Deck.h"
+
 #include "stdafx.h"
 #include <iostream>
 #include <cstdlib>
