@@ -25,16 +25,19 @@ public:
 	~Deck(void);
 
 	void Shuffle();
-	Card DealCard();
-	Card BottomCard();
+	Card DealCard();	//returns card off top of deck
+	Card BottomCard();	//returns card off discard pile
+	Card PeekPile();	//returns card on discard pile, without removing it.
 
 	void GetCard(Card card);	//Places card on bottom of deck
 	void DiscardCard(Card card); //Places card on top of discard pile.
 
+	void CheckDeck();
+	void ResetDeck();
 	void Print();
 
 private:
-	void Swap(Card x, Card y);
+	void Swap(Card& x, Card& y);
 
 	vector<Card> deck;	//This is the deck
 	stack<Card> pile;	//This is the discard pile.
