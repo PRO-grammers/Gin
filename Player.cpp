@@ -208,13 +208,6 @@ bool Player::FindRuns(){
 }
 
 
-bool Player::GotGin()
-{
-
-	return true;
-}
-
-
 void Player::Swap(Card& one, Card& two){
 	cout << "Swap: " << one.name() << '\t' << two.name() << endl;
 	Card tmp = one;
