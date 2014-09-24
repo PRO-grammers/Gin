@@ -13,6 +13,13 @@
 #include <string>
 #include <ctime>
 
+#include "player.h"
+#include "Deck.h"
+#include "card.h"
+#include "player.cpp"
+#include "Deck.cpp"
+#include "card.cpp"
+
 using namespace std;
 
 int main()
