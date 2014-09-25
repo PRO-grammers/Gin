@@ -51,9 +51,6 @@ void Player::PlayerTurn(){
 		PickUpDiscard();
 	else
 		SelectCard();
-
-	if(WannaKnock())
-	cout << "Do you want to knock? " << endl;
 }
 
 void Player::SelectCard(){
@@ -98,9 +95,9 @@ void Player::DiscardCard(Card& card){
 	cin >> cardNumber;
 	if(0 <= cardNumber && cardNumber <= 10){
 		Swap(hand[cardNumber], card);
-	}else{
-		//Do nothing.
 	}
+	deck.DiscardCard(card);
+
 
 	//char the_value;
 	//string the_suit;
@@ -111,7 +108,7 @@ void Player::DiscardCard(Card& card){
 	return;
 }
 
-bool Player::CanKnock(){
+bool Player::WannaKnock(){
 /*
 vector of matched cards, vector of unmatched cards.
 Find Runs: Sort by suit, sort by value. If series (3+) of values then RUN.
@@ -119,10 +116,19 @@ Find Sets: sort by number, If set (3 or 4) of numbers then SET.
 
 If a card is in both a set and a run: Ask user which he wants.
 */
-
-	return true;
+	
+	if(Sum() <= 10)
+	{
+		char ans = 'a';
+		cout << "Do you wish to knock?" << endl;
+		cin.get(ans);
+		cin.ignore('\n');
+		if(toupper(ans) == 'Y')
+			return true;
+		else
+			return false;
+	}
 }
-
 
 //Figure out how to find sets and put them into the vector "sets"
 /*
