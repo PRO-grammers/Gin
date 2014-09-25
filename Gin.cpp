@@ -13,7 +13,7 @@
  	return;
  }
  
- int Gin::SumPoints()
+ int Gin::SumPoints(vector<Card> tmp)
  {
  	
  }
