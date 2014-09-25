@@ -1,18 +1,31 @@
-#pragma once;
-#include "stdafx.h"
+/*
+Authors: Nick Fryer, Zak Kuligin, Guilherme Pereira, Logan MacKenzie
+Class: Comp 220 B, Computer Programming II
+Date: September 25, 2014
+Description: This is the header file for the class Gin which is the
+	class that contains everything needed to play Gin.
 
+*/
+
+#pragma once
+
+#include "stdafx.h"
 #include "Deck.h"
 #include "Card.h"
 #include "Player.h"
+#include <iostream>
+#include <string>
+#include <cstdlib>
 
-class Gin: public Player
-{
+
+class Gin{
 public:
+	Gin();
 	void RunGame();
-	int SumPoints(vector<Card> tmp);
-	void getPlayer1(Player first_player);
-	void getPlayer2(Player second_player);
+	void SumPoints();
+
 
 private:
-	Player player1, player2;
+
+	Player player[2];
 };
