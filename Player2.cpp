@@ -45,8 +45,8 @@ void Player::PlayerTurn(){
 	else
 		SelectCard();
 
-//if(CanKnock())
-//	cout << "Do you want to knock? " << endl;
+	if(WannaKnock())
+	cout << "Do you want to knock? " << endl;
 }
 
 void Player::SelectCard(){
