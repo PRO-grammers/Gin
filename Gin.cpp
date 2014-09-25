@@ -10,6 +10,7 @@
  	 player2.PlayerTurn();
  	 player1.PlayerTurn();
  	}
+ 	return;
  }
  
  int Gin::SumPoints()
