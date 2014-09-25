@@ -1,9 +1,12 @@
-// Author:	Logan MacKenzie
-// Course:	Comp 220, Computer Programming II
-// Date:	20 September 2014
-// Description:	This file contains the definition of the datatype Deck
-//				Deck simulates a playing deck of 52 unique cards.
+/* 
+Author:	Logan MacKenzie
+Course:	Comp 220, Computer Programming II
+Date:	20 September 2014
+Description:	This file contains the definition of the datatype Deck
+		Deck simulates a playing deck of 52 unique cards.
 
+	This file provides the definition of type Deck and the global constant DECK_SIZE.
+*/
 #pragma once
 #include "stdafx.h"
 #include <iostream>
