@@ -1,3 +1,11 @@
+/*
+  Author:  Dorian P. Yeager
+  Course:  COMP 220, Computer Programming II
+  Date:    30 August 2013
+  Description:  This file implements the driver
+                program for this assignment.
+*/
+
 #include "stdafx.h"
 #include "card.h"
 
