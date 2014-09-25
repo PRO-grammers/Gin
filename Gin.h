@@ -1,4 +1,3 @@
-
 #pragma once;
 #include "stdafx.h"
 
@@ -6,11 +5,14 @@
 #include "Card.h"
 #include "Player.h"
 
-class Gin
+class Gin: public Player
 {
 public:
-	friend void RunGame();
+	void RunGame();
 	int SumPoints(vector<Card> tmp);
+	void getPlayer1(Player first_player);
+	void getPlayer2(Player second_player);
+
 private:
-	Player player1,player2;
+	Player player1, player2;
 };
