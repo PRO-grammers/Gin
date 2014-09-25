@@ -1,3 +1,10 @@
+/*
+Authors: Nick Fryer, Zach Kuligin, Guilherme Pereira, Logan MacKenzie
+Class: Comp 220 B, Computer Programming II
+Date: September 25, 2014
+Description: This file contains the implementation of the Player class.
+*/
+
 #include "stdafx.h"
 #include "player.h"
 #include <string>
@@ -8,18 +15,25 @@ using namespace std;
 
 Deck Player::deck;
 
+// Sets up the player
 Player::Player(){
 	handSize = 0;
 //	deck.Shuffle();
+	sets.resize(3);
+	runs.resize(3);
 
 }
 
+
+// Prints the hand with numbers associated to each card
 void Player::PrintHand(){
 	for(int i = 0; i < HAND_SIZE; i++){
 		cout << i << '\t' << hand[i].name() << endl;
 	}
 	return;
 }
+
+
 /*
 General Turn Concept:
 Print Hand
@@ -46,16 +60,15 @@ void Player::PlayerTurn(){
 	else
 		SelectCard();
 
-//if(CanKnock())
-//	cout << "Do you want to knock? " << endl;
+	SortIntoSets();
+	return;
 }
 
 void Player::SelectCard(){
 	Card card = deck.DealCard();
 	cout << "You drew: " << card.name() << endl;
 	DiscardCard(card);
-	MatchCards();
-
+//	MatchCards();
 /*
 	Print Card and Hand
 	DiscardCard
@@ -66,47 +79,21 @@ void Player::SelectCard(){
 
 		}
 */
-
-
+	return;
 }
 
+// Inserts cards into the player's hand
 void Player::GetCard(){
 	hand[handSize++] = deck.DealCard();
 	return;
 }
 
+// Inserts card from discard pile into player's hand.
 void Player::PickUpDiscard(){
 	Card card = deck.BottomCard();
 	cout << "You picked up: " << card.name() << endl;
 	DiscardCard(card);
-	MatchCards();
-}
-
-bool Player::WannaKnock(vector<Card> unmatched){
-/*
-vector of matched cards, vector of unmatched cards.
-Find Runs: Sort by suit, sort by value. If series (3+) of values then RUN.
-Find Sets: sort by number, If set (3 or 4) of numbers then SET.
-
-If a card is in both a set and a run: Ask user which he wants.
-*/
-	int Sum = 0;
-	for(int i = 0; i<unmatched.size(); i++)
-	{
-		Sum = Sum + unmatched[i];
-	}
-	
-	if(Sum <= 10)
-	{
-		char ans = 'a';
-		cout << "Do you wish to knock?" << endl;
-		cin.get(ans);
-		cin.ignore('\n');
-		if(toupper(ans) == 'Y')
-			return true;
-		else
-			return false;
-	}
+//	MatchCards();
 }
 
 // By default the player will throw the card he drew
@@ -119,90 +106,99 @@ void Player::DiscardCard(Card& card){
 	cout << "Enter the number next to the card you want to throw: " << endl;
 	cout << "Or enter -1 for the card you just drew: " << endl;
 	cin >> cardNumber;
-	if(0 <= cardNumber && cardNumber <= 10){
+	if(0 <= cardNumber && cardNumber < 10)
 		Swap(hand[cardNumber], card);
-	}else{
-		//Do nothing.
-	}
 	deck.DiscardCard(card);
-
-	//char the_value;
-	//string the_suit;
-	//cout << "What is the value of the card you would like to discard?" << endl;
-	//cin.get(the_value);
-	//cout << "What is the suit of the card you would like to discard?" << endl;
-	//cin >> the_suit;
 	return;
 }
 
 
-//Figure out how to find sets and put them into the vector "sets"
-/*
-Find Sets: SortBy Number
-If card1 == card2 == card3 
-	put in set
-else
-	put card1 in unmatched
-
-for(int i = 0; i < cards.size(); i++){
-	if(cards[i].getValue() == cards[i+1].getValue()){
-		if(cards[i].getValue() == cards[i+2].getValue()){
-			//Put in Set / Check for fourth card.
-		}else
-			//Put cards i and i+1 in unmatched
-	}else
-		put card i in unmatched
-}
-Deal cards and sort into sets and unmatched
-*/
 
 void Player::MatchCards(){
-	int setNum = 0;
+	FindSets();
+	FindRuns();
+	FindUnmatched();
+	SortIntoSets();
+//Print Sets and Runs:
+/*
+	Find conflicts and report:
 
-	for(int i = 0; i < HAND_SIZE; i++){
-		FindSets(i, setNum);
-		FindRuns(i, setNum);
-	}
+	for( sets){
+		for(card){
+			if(run = CardInRun(card)){
+				
+			}	
+*/
+	return;
 }
 
-void Player::FindSets(int card, int& setNum){
-	//SortByNumber(0, HAND_SIZE);
-	//int count = 0;
-	//int	value = hand[0].getValue();
-	//for(unsigned int i = 1; i < HAND_SIZE; i++){
-	//	if(hand[i].getValue() == value)
-	//		count++;
-	//	else
-	//		count = 0;
-	//	value = hand[i].getValue();
-	//}
-	//if(count >= 3)
-	//	return true;
-	//return false;
-	vector<Card> cards;	//The most cards in a set is 4
-	int k = 1;
-	cards.push_back(hand[card]);
-	for(int i = card+1; i < HAND_SIZE; i++){
-		if(cards[0].getValue() == hand[i].getValue()){
+/*
+FindUnmatched finds all all the cards not in "sets" or "runs" and puts those
+cards into "unmatched".
+*/
+void Player::FindUnmatched(){
+	unmatched.clear();
+	for(int card = 0; card < HAND_SIZE; card++){
+		if(!CardInRun(hand[card]) && !CardInSet(hand[card])){
+			unmatched.push_back(hand[card]);
+		}
+	}
+	return;
+}
+
+
+// Seems to work
+void Player::FindSets(){
+	SortByNumber(0, HAND_SIZE);
+	for(int i = 0; i < sets.size(); i++){
+		sets[i].clear();
+	}
+	vector<Card> cards;
+	Card tmp;
+	int k = 0;
+	int setNum = 0;
+//	int num = 0;
+	for(int i = 0; i < HAND_SIZE;){
+		cards.push_back(hand[i]);
+		while(hand[++i].getSuit() != cards[k].getSuit() && hand[i].getValue() == cards[k].getValue()){
 			cards.push_back(hand[i]);
 			k++;
 		}
+		if(k >= 2){
+			sets[setNum++] = cards;
+		}
+		k = 0;
+		cards.clear();
 	}
-
-	if(k >= 2 && CheckConflicts(cards)){
-		sets[setNum] = cards;
-		setNum++;
-	}
+//Printing: Put in a different function
+	//cout << "Sets:  " << endl;
+	//PrintSets();
+	//for(unsigned int x = 0; x < sets.size(); x++){
+	//	cout << "Set " << x << ": ";
+	//	for(unsigned int i = 0; i < sets[x].size(); i++){
+	//		cout << sets[x][i].name() << '\t';
+	//	}
+	//	cout << endl;
+	//}
 	return;
 }
 
 void Player::SortByNumber(int start, int end){
+	//cout << "In Sort By Number: start = " << start << "  End = " << end << endl;
+	//for(int i = start; i < end; i++){
+	//	cout << hand[i].name() << endl;
+	//}
 	for(int i = start; i < end; i++){
 		for(int k = i; k < end; k++){
 			if(hand[k].getValue() < hand[i].getValue())
 				Swap(hand[k],hand[i]);
 		}
 	}
+	//cout << endl;
+	//for(int i = start; i < end; i++){
+	//	cout << hand[i].name() << endl;
+	//}
+	//cout << "Leaving SortByNumber" << endl;
 	return;
 }
 
@@ -223,114 +219,134 @@ void Player::SortBySuit(){
 	return;
 }
 
-void Player::FindRuns(int card, int& setNum){
-	//SortBySuit();
-	//int start, end = 0;
-	//bool runs = false;
-	//int value, count = 0;
-	//for(int k = 0; k < 4; k++){
-	//	for(start = end; hand[end].getSuit() == Suit(k); end++);
-	//	SortByNumber(start, end);
-	//	value = hand[start].getValue();
-	//	for(int i = (start+1); i < end; i++){
-	//		if(hand[i].getValue() == ++value)
-	//			count++;
-	//		else
-	//			count = 0;
-	//	}
-	//}
-	//if(count >= 3)
-	//	return true;
-	//return false;
-	vector<Card> tmp;
-	tmp.push_back(hand[card]);
+//Works!!
+void Player::FindRuns(){
+	SortIntoSets();
+	for(int i = 0; i < runs.size(); i++){
+		runs[i].clear();
+	}
+	vector<Card> cards;
 	int k = 0;
-	for(int i = card+1; hand[i].getSuit() == tmp[k].getSuit() && hand[i].getValue() == tmp[k].getValue()+1; i++){
-			tmp.push_back(hand[i]);
+	int runNum = 0;
+	for(int i = 0; i < HAND_SIZE;){
+		cards.push_back(hand[i]);
+		while(hand[++i].getSuit() == cards[k].getSuit() && hand[i].getValue() == cards[k].getValue()+1){
+			cards.push_back(hand[i]);
 			k++;
+		}
+		if(k >= 2){
+			runs[runNum++] = cards;
+		}
+		k = 0;
+		cards.clear();
 	}
-	//Check for conflict with other sets.
-	if(k >= 2 && CheckConflicts(tmp)){
-		//Put cards in sets[setNum];
-		sets[setNum] = tmp;
-		setNum++;
-	}
-
+//Printing: probably do not want this here.
+	//cout << "Runs:  " << endl;
+	//PrintRuns();
+	//for(unsigned int x = 0; x < runs.size(); x++){
+	//	cout << "Run " << x << ": ";
+	//	for(unsigned int i = 0; i < runs[x].size(); i++){
+	//		cout << runs[x][i].name() << '\t';
+	//	}
+	//	cout << endl;
+	//}
 	return;
 }
 
-bool Player::CheckConflicts(vector<Card> tmp){
-	/*
-	Return true if the user chooses to go with 'tmp set/run'
-	return false otherwise.
-	*/
-	int error[] = {0,0,0};
-	for(int set = 0; set < NUM_SETS; set++){
-		for(unsigned int tmpCard = 0; tmpCard < tmp.size(); tmpCard++){
-			for(unsigned int setCard = 0; setCard < sets[set].size(); setCard++){
-				if(tmp[tmpCard].name() == sets[set][setCard].name()){
-					error[set] = 1;
-					//Report Error
-					/*
-					Print Run, Print Set
-					Ask User which they want to keep;
-
-					Probably should compare to see how many conflicts there are and then report them to user.
-
-					*/
-				}
+/*
+CheckConflicts checks to make sure that a card in a set is not also in a run.
+If it is then it calls FixConflicts to take care of it.
+Note: in the if-statement, the assignment operator is used intentionally.
+	CardInRun returns 0 if the card is not in a run and 1+ the "runNumber" otherwise.
+	The assignment operator will return the value returned by the CardInRun
+	Thus: if the card is not in a run, this condition will be false
+		  if the card is in a run, the condition will be true and runNum will have 1+which run the card is in.
+ */
+void Player::CheckConflicts(){
+	PrintSets();
+	PrintRuns();
+	int runNum = 0;
+	for(unsigned int setNum = 0; setNum < sets.size(); setNum++){
+		for(int cardNum = 0; cardNum < sets[setNum].size(); cardNum++){
+			if(runNum = CardInRun(sets[setNum][cardNum])){		// Using the assignment operator here is intentional
+				FixConflicts(setNum, --runNum);
 			}
+
 		}
 	}
-	if(error[0] == 1 || error[1] == 1 || error[2] == 1) {
-		ReportErrors(tmp, error);
-		FixErrors(tmp, error);
-		return false;
-	}
-	return true;
+	return;
 }
 
-void Player::ReportErrors(vector<Card> tmp, int error[]){
-//	cout << '\t' << " 0" << '\t' << '\t' << " 1 " << '\t' << '\t' << " 2 " << '\t'  << '\t' << " 3 " << endl;
-//	int size = max(max(sets[0].size(), sets[1].size()),max(sets[2].size(), tmp.size()));
-	for(int i = 0; i < NUM_SETS; i++){
-		for(int cards = 0; cards < sets[i].size(); cards++){
-			cout << "Set " << i << '\t' << sets[i][cards].name() << '\t';
+int Player::CardInRun(Card card){
+	for(int runNum = 0; runNum < runs.size(); runNum++){
+		for(int cardNum = 0; cardNum < runs[runNum].size(); cardNum++){
+			if(card.name() == runs[runNum][cardNum].name())
+				return runNum + 1;
+		}
+	}
+	return 0;
+}
+
+int Player::CardInSet(Card card){
+	for(int setNum = 0; setNum < sets.size(); setNum++){
+		for(int cardNum = 0; cardNum < sets[setNum].size(); cardNum++){
+			if(card.name() == sets[setNum][cardNum].name())
+				return setNum + 1;
+		}
+	}
+	return 0;
+}
+
+
+void Player::FixConflicts(int setNum, int runNum){
+	cout << "Set " << setNum << " and Run " << runNum << " conflict!" << endl;
+	char ans;
+	do{
+		cout << "Which do you wish to keep (enter S for Set or R for Run): ";
+		cin >> ans;
+		cin.ignore('\n');
+		ans = toupper(ans);
+	}while(ans == 'S' || ans == 'R');
+	if(ans == 'S'){
+		// Keep Set / Throw out run
+		runs[runNum].clear();
+	}else{
+		// Keep Run / Throw out set
+		sets[setNum].clear();
+	}
+	return;
+}
+
+// Prints player's runs
+void Player::PrintRuns(){
+	for(int run = 0; run < runs.size(); run++){
+		if(runs[run].empty())
+			continue;
+		cout << "Run " << run << ": ";
+		for(int card = 0; card < runs[run].size(); card++){
+			cout << runs[run][card].name() << '\t';
 		}
 		cout << endl;
 	}
-	cout << "There were conflicts between set 3 and ";
-	if(error[0] == 1)
-		cout << "0 ";
-	if(error[1] == 1)
-		cout << "1 ";
-	if(error[2] == 1)
-		cout << "2 ";
-	cout << endl;
 	return;
 }
 
-void Player::FixErrors(vector<Card> tmp, int error[]){
-	int ans;
-	vector<Card> cards;
-	for(int i = 0; i < NUM_SETS; i++){
-		if(error[i] == 1){
-			cout << "There was an error between sets 3 and " << i << ": Which do you want to keep: ";
-			cin >> ans;
-			if(toupper(ans) == i)
-				return;
-			else{
-				cards = sets[i];
-				sets[i] = tmp;
-			}
+// Prints player's sets
+void Player::PrintSets(){
+	for(int set = 0; set < sets.size(); set++){
+		if(sets[set].empty())
+			continue;
+		cout << "Set " << set << ": ";
+		for(int card = 0; card < sets[set].size(); card++){
+			cout << sets[set][card].name() << '\t';
 		}
+		cout << endl;
 	}
 	return;
 }
 
-
+// Swaps card one and two.
 void Player::Swap(Card& one, Card& two){
-//	cout << "Swap: " << one.name() << '\t' << two.name() << endl;
 	Card tmp = one;
 	one = two;
 	two = tmp;
@@ -338,30 +354,12 @@ void Player::Swap(Card& one, Card& two){
 }
 
 
-
-/*
-private: 
-...
-vector<Card> one, two, three, unmatched;
-
-
-Idea: At most you have 3 sets and runs, so three vectors for them and one for unmatched cards.
-Find Sets -> puts sets (copies of cards) into as many vectors as it needs.
-Find Runs -> puts runs into other vectors. If there is a run that uses a card used in a set -> Ask User;
-Find Unmatched -> puts unmatched cards into unmatched.
-
-
-
-
-*/
-
 // Works!!
 void Player::SortIntoSets(){
 	int start = 0, end = 0;
-	Suit suit = clubs;
+	Suit suit;
 	SortBySuit();
-	cout << endl << "After sorting suits: " << endl;
-	PrintHand();
+	suit = hand[end].getSuit();
 	
 	while(end++, end < HAND_SIZE){
 		if(hand[end].getSuit() != suit){
@@ -371,15 +369,11 @@ void Player::SortIntoSets(){
 		}
 	}
 	SortByNumber(start, HAND_SIZE);
-
-
-	//int setNum = 0;
-	//vector<Card> cards;
-	//for(int i = 0; i < HAND_SIZE; i++){
-	//}	
-	//return;
+	return;
 }
 
+
+// This does not do anything.
 bool Player::DoesCardFit(Card card){
 	int setNum = 0;
 	int setCount = 0;
@@ -401,15 +395,37 @@ bool Player::DoesCardFit(Card card){
 //}
 	return true;
 }
+
+
+bool Player::WannaKnock(){
+	/*
+	vector of matched cards, vector of unmatched cards.
+	Find Runs: Sort by suit, sort by value. If series (3+) of values then RUN.
+	Find Sets: sort by number, If set (3 or 4) of numbers then SET.
+	If a card is in both a set and a run: Ask user which he wants.
+	*/
+	if(Sum() <= 10)
+	{
+		char ans = 'a';
+		cout << "Do you wish to knock?" << endl;
+		cin.get(ans);
+		cin.ignore('\n');
+		if(toupper(ans) == 'Y')
+			return true;
+	}	
+	return false;
+}
+
+
 /*
-Go through hand one card at a time:
-Does this card fit into any sets with the other cards
-if(yes)
-	put in set
-else (No)
-	put in unmatched
-
-
-
-
+Sum sums up the points in a player's hand.
+The +1 for each card is due to the fact that each card has in int value
+of 1 less than its actual value.
 */
+int Player::Sum(){
+	int sum = 0;
+	for(unsigned int i = 0; i < unmatched.size(); i++){
+		sum += int(unmatched[i].getValue()) + 1;
+	}
+	return sum;
+}
