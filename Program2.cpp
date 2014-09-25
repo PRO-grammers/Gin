@@ -13,12 +13,14 @@
 #include <string>
 #include <ctime>
 
-#include "player.h"
+#include "Gin.h"
+#include "Gin.cpp"
+#include "Player.h"
 #include "Deck.h"
-#include "card.h"
-#include "player.cpp"
+#include "Card.h"
+#include "Player.cpp"
 #include "Deck.cpp"
-#include "card.cpp"
+#include "Card.cpp"
 
 using namespace std;
 
