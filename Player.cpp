@@ -113,8 +113,18 @@ Find Sets: sort by number, If set (3 or 4) of numbers then SET.
 
 If a card is in both a set and a run: Ask user which he wants.
 */
-
-	return true;
+	
+	if(Sum() <= 10)
+	{
+		char ans = 'a';
+		cout << "Do you wish to knock?" << endl;
+		cin.get(ans);
+		cin.ignore('\n');
+		if(toupper(ans) == 'Y')
+			return true;
+		else
+			return false;
+	}
 }
 
 
