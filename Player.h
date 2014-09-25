@@ -1,3 +1,14 @@
+/*
+Authors: Nick Fryer, Zach Kuligin, Guilherme Pereira, Logan MacKenzie
+Class: Comp 220 B, Computer Programming II
+Date: September 25, 2014
+Description: This is the header file for the Player class which 
+	represents a player, with a hand of cards.
+
+	This file provides the definition of the type Player and Matches
+	and the global constant HAND_SIZE.
+
+*/
 #ifndef ___PLAYER_H
 #define ___PLAYER_H
 
@@ -6,22 +17,26 @@
 
 
 const int HAND_SIZE = 10;
-const int NUM_SETS = 3;
 
-class Player
-{
+typedef vector<Card> Matches;
+
+class Player{
 public:
 	Player();
 
 	void PlayerTurn();
 	void PrintHand();
+	void PrintSets();
+	void PrintRuns();
+
 
 	void SelectCard();
 	void GetCard();
 	void PickUpDiscard();
 	void DiscardCard(Card& card);
 
-	bool WannaKnock(vector<Card> unmatched); //NEEDS WRITTEN
+	bool WannaKnock();
+	int Sum();
 
 	void SortIntoSets();
 	void SortBySuit();
@@ -29,11 +44,14 @@ public:
 	bool DoesCardFit(Card card);
 
 	void MatchCards();
-	void FindSets(int card, int& setNum);
-	void FindRuns(int card, int& setNum);
-	bool CheckConflicts(vector<Card> tmp);
-	void ReportErrors(vector<Card> tmp, int error[]);
-	void FixErrors(vector<Card> tmp, int error[]);
+	void FindSets();
+	void FindRuns();
+	void FindUnmatched();
+
+	void CheckConflicts();
+	int CardInRun(Card card);
+	int CardInSet(Card card);
+	void FixConflicts(int setNum, int runNum);
 
 
 
@@ -42,8 +60,12 @@ private:
 
 	Card hand[HAND_SIZE];
 	int handSize;
-	vector<Card> sets[4];	//4 arrays because at most you can have 3 sets and then the unmatched cards.
 
+	vector<Matches> runs;
+	vector<Matches> sets;
+	Matches unmatched;
+
+// The deck is static so that both players can access the same deck.
 	static Deck deck;
 };
 
