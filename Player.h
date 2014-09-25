@@ -1,22 +1,13 @@
-/*
-Authors: Nick Fryer, Zachary Kuligin, Guilherme, Pereira, Logan MacKenzie
-Class: Computer Programming II
-Date: September 24, 2014
-Description: This is the header file for the class Player which represents a player with
-             A hand of cards.
-
-*/
-
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ___PLAYER_H
+#define ___PLAYER_H
 
 #include "Card.h"
 #include "Deck.h"
 
-//set player hand size to 10 cards
-const int HAND_SIZE = 10;
 
-//this class deals with each player's turn
+const int HAND_SIZE = 10;
+const int NUM_SETS = 3;
+
 class Player
 {
 public:
@@ -26,20 +17,25 @@ public:
 	void PrintHand();
 
 	void SelectCard();
-	void GetCard(Card card);
+	void GetCard();
 	void PickUpDiscard();
-
 	void DiscardCard(Card& card);
 
-	bool WannaKnock();
 
-	bool FindSets();
-	void SortBySuit(vector<Card>& cards);
-	void SortByNumber(int start, int end);
+
 	void SortIntoSets();
+	void SortBySuit();
+	void SortByNumber(int start, int end);
 	bool DoesCardFit(Card card);
 
-	bool FindRuns();
+	void MatchCards();
+	void FindSets(int card, int& setNum);
+	void FindRuns(int card, int& setNum);
+	bool CheckConflicts(vector<Card> tmp);
+	void ReportErrors(vector<Card> tmp, int error[]);
+	void FixErrors(vector<Card> tmp, int error[]);
+
+
 
 private:
 	void Swap(Card& one, Card& two);
