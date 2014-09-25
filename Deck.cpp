@@ -101,6 +101,7 @@ void Deck::ResetDeck(){
 		pile.pop();
 	}
 	Shuffle();
+	pile.push(deck.back());
 	return;
 }
 
