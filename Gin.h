@@ -10,7 +10,7 @@ class Gin
 {
 public:
 	friend void RunGame();
-	int SumPoints();
+	int SumPoints(vector<Card> tmp);
 private:
 	Player player1,player2;
 };
