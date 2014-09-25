@@ -10,7 +10,7 @@ Gin::Gin(){
 }
 
 void Gin::RunGame(){
-	for(int i = 0; player[i%2].WannaKnock(); i++){
+	for(int i = 0; !player[i%2].WannaKnock(); i++){
 		player[i].PlayerTurn();
 	}
 	SumPoints();
