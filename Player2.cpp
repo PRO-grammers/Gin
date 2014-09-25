@@ -130,26 +130,6 @@ If a card is in both a set and a run: Ask user which he wants.
 	}
 }
 
-//Figure out how to find sets and put them into the vector "sets"
-/*
-Find Sets: SortBy Number
-If card1 == card2 == card3 
-	put in set
-else
-	put card1 in unmatched
-
-for(int i = 0; i < cards.size(); i++){
-	if(cards[i].getValue() == cards[i+1].getValue()){
-		if(cards[i].getValue() == cards[i+2].getValue()){
-			//Put in Set / Check for fourth card.
-		}else
-			//Put cards i and i+1 in unmatched
-	}else
-		put card i in unmatched
-}
-Deal cards and sort into sets and unmatched
-*/
-
 void Player::MatchCards(){
 	int setNum = 0;
 
