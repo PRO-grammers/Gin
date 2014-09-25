@@ -1,5 +1,5 @@
 /* 
-Author:	Logan MacKenzie
+Author:	Logan MacKenzie, Nick Fryer, Zachary Kuligin, Guilherme Pereira
 Course:	Comp 220, Computer Programming II
 Date:	20 September 2014
 Description:	This file contains the definition of the datatype Deck
