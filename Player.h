@@ -21,7 +21,7 @@ public:
 	void PickUpDiscard();
 	void DiscardCard(Card& card);
 
-
+	bool WannaKnock(vector<Card> unmatched); //NEEDS WRITTEN
 
 	void SortIntoSets();
 	void SortBySuit();
