@@ -3,11 +3,11 @@
  
  void Gin::RunGame()
  {
- 	player[0].PlayerTurn();
- 	while(WannaKnock()==false)
+ 	player1.Player.PlayerTurn();
+ 	while(Player.WannaKnock()==false)
  	{
- 	 player[1].PlayerTurn();
- 	 player[0].PlayerTurn();
+ 	 player2.Player.PlayerTurn();
+ 	 player1.Player.PlayerTurn();
  	}
  }
  
