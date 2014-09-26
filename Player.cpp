@@ -1,5 +1,5 @@
 /*
-Authors: Nick Fryer, Zach Kuligin, Guilherme Pereira, Logan MacKenzie
+Authors: Nick Fryer, Zak Kuligin, Guilherme Pereira, Logan MacKenzie
 Class: Comp 220 B, Computer Programming II
 Date: September 25, 2014
 Description: This file contains the implementation of the Player class.
@@ -10,6 +10,7 @@ Description: This file contains the implementation of the Player class.
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include <Windows.h>
 
 using namespace std;
 
@@ -44,6 +45,11 @@ Turn over
 
 */
 void Player::PlayerTurn(){
+	SortIntoSets();
+	cout << "You have these combinations:" << endl;
+	PrintSets();
+	PrintRuns();
+	cout << "You currently have " << Sum() << " points. " << endl;
 	cout << "Here are the cards currently in your hand:" << endl;
 	PrintHand();
 	char ans;
@@ -61,6 +67,7 @@ void Player::PlayerTurn(){
 		SelectCard();
 
 	SortIntoSets();
+	MatchCards();
 	return;
 }
 
@@ -68,17 +75,6 @@ void Player::SelectCard(){
 	Card card = deck.DealCard();
 	cout << "You drew: " << card.name() << endl;
 	DiscardCard(card);
-//	MatchCards();
-/*
-	Print Card and Hand
-	DiscardCard
-	Ask if player wants to Knock
-		Knock(){
-			FindSets/GotGin
-			CountPoints
-
-		}
-*/
 	return;
 }
 
@@ -93,7 +89,6 @@ void Player::PickUpDiscard(){
 	Card card = deck.BottomCard();
 	cout << "You picked up: " << card.name() << endl;
 	DiscardCard(card);
-//	MatchCards();
 }
 
 // By default the player will throw the card he drew
@@ -119,16 +114,8 @@ void Player::MatchCards(){
 	FindRuns();
 	FindUnmatched();
 	SortIntoSets();
-//Print Sets and Runs:
-/*
-	Find conflicts and report:
 
-	for( sets){
-		for(card){
-			if(run = CardInRun(card)){
-				
-			}	
-*/
+	CheckConflicts();
 	return;
 }
 
@@ -157,7 +144,6 @@ void Player::FindSets(){
 	Card tmp;
 	int k = 0;
 	int setNum = 0;
-//	int num = 0;
 	for(int i = 0; i < HAND_SIZE;){
 		cards.push_back(hand[i]);
 		while(hand[++i].getSuit() != cards[k].getSuit() && hand[i].getValue() == cards[k].getValue()){
@@ -170,35 +156,16 @@ void Player::FindSets(){
 		k = 0;
 		cards.clear();
 	}
-//Printing: Put in a different function
-	//cout << "Sets:  " << endl;
-	//PrintSets();
-	//for(unsigned int x = 0; x < sets.size(); x++){
-	//	cout << "Set " << x << ": ";
-	//	for(unsigned int i = 0; i < sets[x].size(); i++){
-	//		cout << sets[x][i].name() << '\t';
-	//	}
-	//	cout << endl;
-	//}
 	return;
 }
 
 void Player::SortByNumber(int start, int end){
-	//cout << "In Sort By Number: start = " << start << "  End = " << end << endl;
-	//for(int i = start; i < end; i++){
-	//	cout << hand[i].name() << endl;
-	//}
 	for(int i = start; i < end; i++){
 		for(int k = i; k < end; k++){
 			if(hand[k].getValue() < hand[i].getValue())
 				Swap(hand[k],hand[i]);
 		}
 	}
-	//cout << endl;
-	//for(int i = start; i < end; i++){
-	//	cout << hand[i].name() << endl;
-	//}
-	//cout << "Leaving SortByNumber" << endl;
 	return;
 }
 
@@ -208,7 +175,6 @@ void Player::SortBySuit(){
 	int k = 0;
 	for(int i = 0; i < 4; i++){
 		for(int j = (HAND_SIZE-1); j >= k; j--){
-//			cout << "Hand[" << j << "] = " << hand[j].name() << endl;
 			while(hand[k].getSuit() == Suit(i)){
 				k++;
 			}
@@ -240,16 +206,6 @@ void Player::FindRuns(){
 		k = 0;
 		cards.clear();
 	}
-//Printing: probably do not want this here.
-	//cout << "Runs:  " << endl;
-	//PrintRuns();
-	//for(unsigned int x = 0; x < runs.size(); x++){
-	//	cout << "Run " << x << ": ";
-	//	for(unsigned int i = 0; i < runs[x].size(); i++){
-	//		cout << runs[x][i].name() << '\t';
-	//	}
-	//	cout << endl;
-	//}
 	return;
 }
 
@@ -304,9 +260,11 @@ void Player::FixConflicts(int setNum, int runNum){
 	do{
 		cout << "Which do you wish to keep (enter S for Set or R for Run): ";
 		cin >> ans;
-		cin.ignore('\n');
+		cin.sync();
 		ans = toupper(ans);
-	}while(ans == 'S' || ans == 'R');
+	}while((ans != 'S') && (ans != 'R'));
+	cout << "Out of loop: ans = " << ans << endl; 
+
 	if(ans == 'S'){
 		// Keep Set / Throw out run
 		runs[runNum].clear();
@@ -373,46 +331,18 @@ void Player::SortIntoSets(){
 }
 
 
-// This does not do anything.
-bool Player::DoesCardFit(Card card){
-	int setNum = 0;
-	int setCount = 0;
-
-
-//	int values = 0;
-//	int runs = 0;
-////	Suit runSuit;
-////	int runStart, runEnd;
-//	for(int i = 0; i < HAND_SIZE; i++){
-//		if(card.getValue() == hand[i].getValue()){
-//			values++;
-//		}
-//		
-//
-//
-//	}
-//	return true;
-//}
-	return true;
-}
-
 
 bool Player::WannaKnock(){
-	/*
-	vector of matched cards, vector of unmatched cards.
-	Find Runs: Sort by suit, sort by value. If series (3+) of values then RUN.
-	Find Sets: sort by number, If set (3 or 4) of numbers then SET.
-	If a card is in both a set and a run: Ask user which he wants.
-	*/
-	if(Sum() <= 10)
-	{
+	if(Sum() <= 10){
 		char ans = 'a';
 		cout << "Do you wish to knock?" << endl;
-		cin.get(ans);
-		cin.ignore('\n');
-		if(toupper(ans) == 'Y')
+		cin >> ans;
+		cin.sync();
+		if(toupper(ans) == 'Y'){
 			return true;
+		}
 	}	
+	cout << endl << endl << endl << endl;
 	return false;
 }
 
