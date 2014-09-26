@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//The constructor sets each player for 10 cards.
 Gin::Gin(){
 	for(int i = 0; i < HAND_SIZE; i++){
 		player[0].GetCard();
@@ -12,6 +13,7 @@ Gin::Gin(){
 	}
 }
 
+//It runs the game and calls both players' turns. If a player knocks then it calls SumPoints()
 void Gin::RunGame(){
 	int turn = -1;
 	do{
@@ -25,6 +27,7 @@ void Gin::RunGame(){
 	return;
 }
 
+//This will take the sum of each player's points, compare them and determine a winner.
 void Gin::SumPoints(){
 	int one = player[0].Sum();
 	int two = player[1].Sum();
