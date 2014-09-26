@@ -17,11 +17,12 @@ using namespace std;
 Deck Player::deck;
 
 // Sets up the player
+// Initially resizes 'sets' and 'runs' so that program does not have to 
+// deal with this later on.
 Player::Player(){
-	handSize = 0;
+	handSize = 0;	// Only used in GetCard(). Just for initially inserting cards into hand.
 	sets.resize(3);
 	runs.resize(3);
-
 }
 
 
@@ -35,13 +36,10 @@ void Player::PrintHand(){
 
 
 /*
-General Turn Concept:
-Print Hand
-Choose Card to pick-up
-Pick-Up card/Discard -> Function
-If Player can knock, then ask: Do you want to knock?
-Turn over
-
+PlayerTurn simulates the turn of the player.
+If Prints the Sets and Runs the player has and the players hand.
+It asks the player if they want to pick up the card from the discard pile
+or the deck. Then it calls the appropriate function. 
 */
 void Player::PlayerTurn(){
 	SortIntoSets();
@@ -70,6 +68,7 @@ void Player::PlayerTurn(){
 	return;
 }
 
+// SelectCard prints the card from the deck and calls DiscardCard.
 void Player::SelectCard(){
 	Card card = deck.DealCard();
 	cout << "You drew: " << card.name() << endl;
@@ -108,13 +107,14 @@ void Player::DiscardCard(Card& card){
 
 
 
+//MatchCards Sorts sets and runs and unmatched cards.
 void Player::MatchCards(){
 	FindSets();
 	FindRuns();
+	CheckConflicts();
 	FindUnmatched();
 	SortIntoSets();
 
-	CheckConflicts();
 	return;
 }
 
@@ -133,7 +133,7 @@ void Player::FindUnmatched(){
 }
 
 
-// Seems to work
+// FindSets searchs for sets of cards and stores them in 'sets'
 void Player::FindSets(){
 	SortByNumber(0, HAND_SIZE);
 	for(int i = 0; i < sets.size(); i++){
@@ -158,6 +158,7 @@ void Player::FindSets(){
 	return;
 }
 
+// Sorts cards from 'start' to 'end' in ascending order of number
 void Player::SortByNumber(int start, int end){
 	for(int i = start; i < end; i++){
 		for(int k = i; k < end; k++){
@@ -168,7 +169,7 @@ void Player::SortByNumber(int start, int end){
 	return;
 }
 
-
+// Sorts whole hand in order of suits.
 void Player::SortBySuit(){
 	Suit suit = clubs;
 	int k = 0;
@@ -184,7 +185,7 @@ void Player::SortBySuit(){
 	return;
 }
 
-//Works!!
+// FindRuns searches the player's hand for runs and stores them in 'runs'
 void Player::FindRuns(){
 	SortIntoSets();
 	for(int i = 0; i < runs.size(); i++){
@@ -232,6 +233,7 @@ void Player::CheckConflicts(){
 	return;
 }
 
+// Checks if 'card' is in a run and returns 1+ the number of the run.
 int Player::CardInRun(Card card){
 	for(int runNum = 0; runNum < runs.size(); runNum++){
 		for(int cardNum = 0; cardNum < runs[runNum].size(); cardNum++){
@@ -242,6 +244,7 @@ int Player::CardInRun(Card card){
 	return 0;
 }
 
+// Checks if 'card' is in a set and returns 1+ the number of the set.
 int Player::CardInSet(Card card){
 	for(int setNum = 0; setNum < sets.size(); setNum++){
 		for(int cardNum = 0; cardNum < sets[setNum].size(); cardNum++){
@@ -252,7 +255,7 @@ int Player::CardInSet(Card card){
 	return 0;
 }
 
-
+// FixConflicts reports conflicts and asks the user how to resolve the issue.
 void Player::FixConflicts(int setNum, int runNum){
 	cout << "Set " << setNum << " and Run " << runNum << " conflict!" << endl;
 	char ans;
@@ -311,7 +314,7 @@ void Player::Swap(Card& one, Card& two){
 }
 
 
-// Works!!
+// Sorts hand by suit and each suit in ascending order of value
 void Player::SortIntoSets(){
 	int start = 0, end = 0;
 	Suit suit;
@@ -330,7 +333,7 @@ void Player::SortIntoSets(){
 }
 
 
-
+// Checks whether the player can knock and if so, asks user if they wish to knock.
 bool Player::WannaKnock(){
 	if(Sum() <= 10){
 		char ans = 'a';
