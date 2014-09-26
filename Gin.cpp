@@ -36,7 +36,7 @@ void Gin::SumPoints(){
 	cout << "Player two's score: " << two << endl;
 
 	if(one < two){
-		cout << "Player One wins!!" << endl;	//Do something fancy
+		cout << "Player One wins!!" << endl;
 	}else if(one > two){
 		cout << "Player Two wins!!" << endl;
 	}else
