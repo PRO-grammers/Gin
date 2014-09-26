@@ -19,7 +19,6 @@ Deck Player::deck;
 // Sets up the player
 Player::Player(){
 	handSize = 0;
-//	deck.Shuffle();
 	sets.resize(3);
 	runs.resize(3);
 
