@@ -1,32 +1,31 @@
+/*
+Authors: Nick Fryer, Zak Kuligin, Guilherme Pereira, Logan MacKenzie
+Class: Comp 220 B, Computer Programming II
+Date: September 25, 2014
+Description: This is the header file for the class Gin which is the
+	class that contains everything needed to play Gin.
+
+*/
+
+#pragma once
+
 #include "stdafx.h"
 #include "Deck.h"
-#include "Gin.h"
+#include "Card.h"
 #include "Player.h"
+#include <iostream>
+#include <string>
+#include <cstdlib>
 
-using namespace std;
 
-Gin::Gin(){
-	
-}
+class Gin{
+public:
+	Gin();
+	void RunGame();
 
-void Gin::RunGame(){
-	for(int i = 0; !player[i%2].WannaKnock(); i++){
-		player[i].PlayerTurn();
-	}
-	SumPoints();
-	return;
-}
 
-void Gin::SumPoints(){
-	int one = player[0].Sum();
-	int two = player[1].Sum();
+private:
+	void SumPoints();
 
-	if(one > two){
-		cout << "Player One wins!!" << endl;	//Do something fancy
-	}else if(one < two){
-		cout << "Player Two wins!!" << endl;
-	}else
-		cout << "Players Tie:  A little boring and probably contrived. " << endl;
-	return;
-}
-
+	Player player[2];
+};
