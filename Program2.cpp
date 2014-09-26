@@ -10,13 +10,14 @@
 #include <iostream>
 #include <cstdlib>
 
+//includes the header file for Gin
 #include "Gin.h"
 
 using namespace std;
 
-
 int main()
 {
+	//calls the Gin class and runs the game
 	Gin game;
 	game.RunGame();
 	return 0;
