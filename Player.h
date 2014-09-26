@@ -1,5 +1,5 @@
 /*
-Authors: Nick Fryer, Zachary Kuligin, Guilherme Pereira, Logan MacKenzie
+Authors: Nick Fryer, Zach Kuligin, Guilherme Pereira, Logan MacKenzie
 Class: Comp 220 B, Computer Programming II
 Date: September 25, 2014
 Description: This is the header file for the Player class which 
@@ -25,23 +25,22 @@ public:
 	Player();
 
 	void PlayerTurn();
+	bool WannaKnock();
+	int Sum();
+
+private:
 	void PrintHand();
 	void PrintSets();
 	void PrintRuns();
-
 
 	void SelectCard();
 	void GetCard();
 	void PickUpDiscard();
 	void DiscardCard(Card& card);
 
-	bool WannaKnock();
-	int Sum();
-
 	void SortIntoSets();
 	void SortBySuit();
 	void SortByNumber(int start, int end);
-	bool DoesCardFit(Card card);
 
 	void MatchCards();
 	void FindSets();
@@ -53,9 +52,6 @@ public:
 	int CardInSet(Card card);
 	void FixConflicts(int setNum, int runNum);
 
-
-
-private:
 	void Swap(Card& one, Card& two);
 
 	Card hand[HAND_SIZE];
