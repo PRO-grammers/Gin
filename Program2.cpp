@@ -9,23 +9,15 @@
 #include "stdafx.h"
 #include <iostream>
 #include <cstdlib>
-#include <cmath>
-#include <string>
-#include <ctime>
 
 #include "Gin.h"
-#include "Gin.cpp"
-#include "Player.h"
-#include "Deck.h"
-#include "Card.h"
-#include "Player.cpp"
-#include "Deck.cpp"
-#include "Card.cpp"
 
 using namespace std;
 
+
 int main()
 {
-  Gin();
-  return 0;
+	Gin game;
+	game.RunGame();
+	return 0;
 }
