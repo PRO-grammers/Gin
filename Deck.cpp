@@ -102,6 +102,7 @@ void Deck::ResetDeck(){
 	}
 	Shuffle();
 	pile.push(deck.back());
+	deck.pop_back();
 	return;
 }
 
