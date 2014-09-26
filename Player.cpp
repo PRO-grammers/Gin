@@ -1,5 +1,5 @@
 /*
-Authors: Nick Fryer, Zak Kuligin, Guilherme Pereira, Logan MacKenzie
+Authors: Nick Fryer, Zachary Kuligin, Guilherme Pereira, Logan MacKenzie
 Class: Comp 220 B, Computer Programming II
 Date: September 25, 2014
 Description: This file contains the implementation of the Player class.
